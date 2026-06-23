@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from app.schemas.book import BookRead
 
@@ -40,6 +40,19 @@ class ExtractedPreferences(BaseModel):
     similar_to: list[str] = Field(default_factory=list)
     needs_clarification: bool = False
     clarifying_question: str | None = None
+
+    @field_validator(
+        "themes",
+        "tropes",
+        "disliked_tropes",
+        "reading_goals",
+        "similar_to",
+        mode="before",
+    )
+    @classmethod
+    def _coerce_none_to_empty_list(cls, value: object) -> object:
+        """The LLM may emit ``null`` for list fields; treat it as an empty list."""
+        return [] if value is None else value
 
 
 class ChatResponse(BaseModel):
