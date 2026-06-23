@@ -1,0 +1,153 @@
+# ===========================================================================
+# BookMind AI - full stack orchestration
+#
+# One command to run everything:   docker compose up --build
+#
+# Services:
+#   postgres   - primary relational database
+#   chromadb   - vector store for semantic book retrieval (RAG)
+#   ollama     - local open-source LLM runtime (default provider, no API key)
+#   mlflow     - experiment / LLM-call tracking
+#   backend    - FastAPI app (migrations + seed run on start)
+#   frontend   - React SPA served by nginx, proxies /api -> backend
+# ===========================================================================
+
+name: bookmind
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-bookmind}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bookmind}
+      POSTGRES_DB: ${POSTGRES_DB:-bookmind}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-bookmind} -d ${POSTGRES_DB:-bookmind}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: [bookmind]
+
+  chromadb:
+    image: chromadb/chroma:0.5.23
+    restart: unless-stopped
+    environment:
+      IS_PERSISTENT: "TRUE"
+      ANONYMIZED_TELEMETRY: "FALSE"
+    volumes:
+      - chroma_data:/chroma/chroma
+    ports:
+      - "${CHROMA_HOST_PORT:-8001}:8000"
+    healthcheck:
+      test: ["CMD", "/bin/sh", "-c", "exec 3<>/dev/tcp/localhost/8000"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks: [bookmind]
+
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    environment:
+      OLLAMA_KEEP_ALIVE: "10m"
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "${OLLAMA_HOST_PORT:-11434}:11434"
+    networks: [bookmind]
+    # GPU acceleration is optional. Uncomment if you have the NVIDIA toolkit:
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:v2.19.0
+    restart: unless-stopped
+    command: >
+      mlflow server
+      --host 0.0.0.0
+      --port 5000
+      --backend-store-uri sqlite:////mlflow/mlflow.db
+      --artifacts-destination /mlflow/artifacts
+    volumes:
+      - mlflow_data:/mlflow
+    ports:
+      - "${MLFLOW_HOST_PORT:-5000}:5000"
+    networks: [bookmind]
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      chromadb:
+        condition: service_started
+    environment:
+      ENVIRONMENT: ${ENVIRONMENT:-production}
+      SECRET_KEY: ${SECRET_KEY:-please-change-this-in-production}
+      # Database
+      POSTGRES_USER: ${POSTGRES_USER:-bookmind}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bookmind}
+      POSTGRES_DB: ${POSTGRES_DB:-bookmind}
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      # Vector store
+      CHROMA_HOST: chromadb
+      CHROMA_PORT: 8000
+      # LLM provider (default: local Ollama — no API key required)
+      LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
+      OLLAMA_BASE_URL: http://ollama:11434
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-llama3.1:8b}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o-mini}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-3-5-haiku-latest}
+      # Embeddings (always local)
+      EMBEDDING_MODEL: ${EMBEDDING_MODEL:-sentence-transformers/all-MiniLM-L6-v2}
+      # MLflow
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+      ENABLE_MLFLOW: ${ENABLE_MLFLOW:-true}
+      # CORS (the nginx-served frontend calls same-origin, but allow direct access too)
+      BACKEND_CORS_ORIGINS: ${BACKEND_CORS_ORIGINS:-http://localhost:3000,http://localhost:5173}
+      # Run DB seed on first boot
+      SEED_ON_START: ${SEED_ON_START:-true}
+    ports:
+      - "${BACKEND_HOST_PORT:-8000}:8000"
+    volumes:
+      # Persist downloaded embedding model weights between restarts.
+      - hf_cache:/home/app/.cache/huggingface
+    networks: [bookmind]
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "${FRONTEND_HOST_PORT:-3000}:80"
+    networks: [bookmind]
+
+volumes:
+  postgres_data:
+  chroma_data:
+  ollama_data:
+  mlflow_data:
+  hf_cache:
+
+networks:
+  bookmind:
+    driver: bridge

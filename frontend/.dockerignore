@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+
+# Local env & secrets
+.env
+.env.*
+!.env.example
+
+# Logs & caches
+*.log
+.eslintcache
+.vite/
+
+# Editor / VCS
+.git/
+.gitignore
+.vscode/
+.idea/
+*.md

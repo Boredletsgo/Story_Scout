@@ -1,0 +1,56 @@
+# ===========================================================================
+# BookMind AI - Backend dependencies (pinned for reproducible prod builds)
+# ===========================================================================
+
+# --- Web framework ---
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+
+# --- Settings / validation ---
+pydantic==2.10.4
+pydantic-settings==2.7.1
+email-validator==2.2.0
+
+# --- Database ---
+sqlalchemy[asyncio]==2.0.36
+asyncpg==0.30.0
+alembic==1.14.0
+# sync driver used by Alembic offline / scripts
+psycopg2-binary==2.9.10
+
+# --- Auth / security ---
+passlib[bcrypt]==1.7.4
+bcrypt==4.2.1
+python-jose[cryptography]==3.3.0
+
+# --- AI / Agents / RAG ---
+langgraph==0.2.60
+langchain==0.3.13
+langchain-core==0.3.28
+langchain-community==0.3.13
+langchain-openai==0.2.14
+langchain-anthropic==0.3.1
+langchain-ollama==0.2.2
+openai==1.58.1
+anthropic==0.42.0
+
+# --- Vector store / embeddings ---
+chromadb==0.5.23
+sentence-transformers==3.3.1
+
+# --- MLOps ---
+mlflow==2.19.0
+
+# --- Utilities ---
+httpx==0.28.1
+tenacity==9.0.0
+structlog==24.4.0
+python-dotenv==1.0.1
+orjson==3.10.13
+
+# --- Testing ---
+pytest==8.3.4
+pytest-asyncio==0.25.0
+pytest-cov==6.0.0
+aiosqlite==0.20.0
