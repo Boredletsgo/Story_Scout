@@ -61,28 +61,28 @@ export function LibraryPage() {
     <div className="mx-auto max-w-6xl px-5 py-8">
       <PageHeader
         title="My Library"
-        subtitle="Everything you're reading, want to read, and have finished."
+        subtitle="Your personal collection — read, reading, and waiting by the fire."
         icon={LibraryBig}
       />
 
-      {/* Tabs */}
-      <div className="mb-6 flex flex-wrap gap-2 border-b border-ink-800">
+      {/* Tabs — carved shelf labels */}
+      <div className="mb-6 flex flex-wrap gap-2 shelf">
         {TABS.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
             className={cn(
-              "relative -mb-px flex items-center gap-2 border-b-2 px-3 py-2.5 text-sm font-medium transition",
+              "relative -mb-px flex items-center gap-2 rounded-t-2xl border-b-2 px-4 py-2.5 text-sm font-medium transition-all duration-300 ease-in-out",
               tab === t.key
-                ? "border-brand-500 text-white"
-                : "border-transparent text-ink-400 hover:text-ink-200",
+                ? "border-brand-500 bg-brand-600/10 text-brand-200 drop-shadow-[0_0_6px_rgba(229,169,60,0.35)]"
+                : "border-transparent text-ink-400 hover:text-ink-100",
             )}
           >
-            {t.label}
+            <span className="font-serif tracking-wide">{t.label}</span>
             <span
               className={cn(
                 "rounded-full px-1.5 py-0.5 text-xs",
-                tab === t.key ? "bg-brand-600/20 text-brand-200" : "bg-ink-800 text-ink-400",
+                tab === t.key ? "bg-brand-600/25 text-brand-200" : "bg-ink-800 text-ink-400",
               )}
             >
               {counts[t.key]}
@@ -95,11 +95,11 @@ export function LibraryPage() {
         <div className="card flex flex-col items-center justify-center gap-3 px-6 py-16 text-center">
           <BookOpen className="h-10 w-10 text-ink-600" />
           <div>
-            <p className="font-medium text-ink-200">
-              {tab === "all" ? "Your library is empty" : `Nothing in “${statusLabel(tab)}” yet`}
+            <p className="font-display text-lg font-semibold text-ink-100">
+              {tab === "all" ? "Your shelves are bare" : `Nothing in “${statusLabel(tab)}” yet`}
             </p>
-            <p className="mt-1 text-sm text-ink-500">
-              Discover books through a conversation and add them here.
+            <p className="mt-1 font-serif text-sm italic text-ink-500">
+              Sit by the Hearth and let the Scout find stories to fill them.
             </p>
           </div>
           <Link to="/app/chat" className="btn-primary mt-1">
@@ -138,7 +138,7 @@ function LibraryRow({
   removing: boolean;
 }) {
   return (
-    <div className="card flex items-center gap-4 p-3">
+    <div className="card flex items-center gap-4 p-3.5 transition-all duration-500 hover:shadow-glow-md">
       <Link to={`/app/books/${item.book.id}`} className="w-14 shrink-0">
         <BookCover title={item.book.title} coverUrl={item.book.cover_url} />
       </Link>
@@ -146,12 +146,14 @@ function LibraryRow({
       <div className="min-w-0 flex-1">
         <Link
           to={`/app/books/${item.book.id}`}
-          className="line-clamp-1 font-semibold text-ink-50 hover:text-brand-300"
+          className="line-clamp-1 font-display text-lg font-semibold text-ink-50 hover:text-brand-300"
         >
           {item.book.title}
         </Link>
         {item.book.author ? (
-          <p className="line-clamp-1 text-sm text-ink-400">{item.book.author.name}</p>
+          <p className="line-clamp-1 font-serif text-sm italic text-ink-400">
+            {item.book.author.name}
+          </p>
         ) : null}
         {item.status === "currently_reading" && item.progress_percent > 0 ? (
           <div className="mt-2 flex items-center gap-2">

@@ -36,10 +36,10 @@ export function LoginPage() {
   return (
     <AuthShell
       title="Welcome back"
-      subtitle="Sign in to pick up where your reading left off."
+      subtitle="Sign in and settle back in by the fire."
       footer={
         <>
-          New to BookMind?{" "}
+          New to Story Scout?{" "}
           <Link to="/register" className="font-semibold text-brand-300 hover:text-brand-200">
             Create an account
           </Link>

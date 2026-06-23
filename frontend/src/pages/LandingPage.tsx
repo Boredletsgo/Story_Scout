@@ -15,30 +15,30 @@ import { Logo } from "@/components/Logo";
 const FEATURES = [
   {
     icon: MessageSquareText,
-    title: "Conversational discovery",
-    body: "Describe a mood, a vibe, or a book you loved. Our agents ask the right follow-ups and surface titles that actually fit.",
+    title: "Discovery by conversation",
+    body: "Describe a mood, a vibe, or a book you adored. The Scout asks the right follow-ups and pulls titles that truly fit.",
   },
   {
     icon: BrainCircuit,
-    title: "Multi-agent reasoning",
-    body: "A pipeline of specialized agents extracts your taste, retrieves candidates, critiques them, and explains every pick.",
+    title: "Thoughtful reasoning",
+    body: "A quiet circle of specialized agents reads your taste, gathers candidates, weighs them, and explains every choice.",
   },
   {
     icon: Wand2,
-    title: "Explainable picks",
-    body: "No black boxes. Each recommendation comes with a clear, personal reason grounded in your preferences.",
+    title: "Picks you can trust",
+    body: "No black boxes — every recommendation arrives with an Archivist's Note explaining why it's for you.",
   },
   {
     icon: Library,
-    title: "Your reading life, organized",
-    body: "Track what you're reading, want to read, and finished — and watch your taste profile sharpen over time.",
+    title: "Your reading life, kept warm",
+    body: "Track what you're reading, longing to read, and finished — and watch your taste profile deepen over time.",
   },
 ];
 
 const STEPS = [
-  { n: "01", title: "Tell us what you're in the mood for", body: "“Something cozy with a slow-burn romance and a found family.”" },
-  { n: "02", title: "Our agents do the thinking", body: "Preference extraction, retrieval, critique, and explanation — in seconds." },
-  { n: "03", title: "Get picks you'll actually love", body: "Curated recommendations with reasons, ready to add to your library." },
+  { n: "01", title: "Tell the Scout your mood", body: "“Something cozy with a slow-burn romance and a found family.”" },
+  { n: "02", title: "The Scout wanders the stacks", body: "Taste-reading, retrieval, critique, and a hand-written reason — in moments." },
+  { n: "03", title: "Curl up with picks you'll love", body: "Curated recommendations with reasons, ready to slip onto your shelf." },
 ];
 
 export function LandingPage() {
@@ -63,27 +63,27 @@ export function LandingPage() {
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div
-          className="pointer-events-none absolute inset-0 opacity-60"
+          className="pointer-events-none absolute inset-0 opacity-70"
           style={{
             background:
-              "radial-gradient(60rem 40rem at 70% -10%, rgba(99,102,241,0.18), transparent), radial-gradient(40rem 30rem at 10% 20%, rgba(168,85,247,0.12), transparent)",
+              "radial-gradient(60rem 40rem at 70% -10%, rgba(229,169,60,0.16), transparent), radial-gradient(40rem 30rem at 10% 20%, rgba(163,147,235,0.10), transparent)",
           }}
         />
         <div className="relative mx-auto max-w-6xl px-5 pb-20 pt-16 sm:pt-24">
           <div className="mx-auto max-w-3xl text-center">
             <span className="chip mx-auto mb-6 w-fit border-brand-700/50 bg-brand-600/10 text-brand-200">
               <Sparkles className="h-3.5 w-3.5" />
-              AI-powered book discovery
+              Your cozy reading companion
             </span>
-            <h1 className="text-balance text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-6xl">
+            <h1 className="text-balance text-4xl font-extrabold leading-tight tracking-tight text-ink-50 sm:text-6xl">
               Find your next favorite book{" "}
-              <span className="bg-gradient-to-r from-brand-300 to-fuchsia-400 bg-clip-text text-transparent">
-                through conversation
+              <span className="bg-gradient-to-r from-brand-300 to-mist-400 bg-clip-text text-transparent">
+                by the fire
               </span>
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg text-ink-300">
-              BookMind AI turns a simple chat into perfectly matched recommendations. Tell it the
-              mood you're after — it handles the rest with a team of reasoning agents.
+            <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg font-serif text-ink-300">
+              Story Scout turns a quiet chat into perfectly matched recommendations. Tell it the
+              world you want to escape into — it wanders the stacks and brings stories home.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link to="/register" className="btn-primary px-6 py-3 text-base">
@@ -106,7 +106,7 @@ export function LandingPage() {
                 <span className="h-3 w-3 rounded-full bg-rose-400/80" />
                 <span className="h-3 w-3 rounded-full bg-amber-400/80" />
                 <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
-                <span className="ml-2 text-xs text-ink-500">BookMind — Recommendations</span>
+                <span className="ml-2 text-xs text-ink-500">Story Scout — by the Hearth</span>
               </div>
               <div className="space-y-4 p-5 text-sm">
                 <div className="flex justify-end">
@@ -144,11 +144,11 @@ export function LandingPage() {
       {/* Features */}
       <section className="mx-auto max-w-6xl px-5 py-20">
         <div className="mx-auto mb-12 max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-white">
+          <h2 className="text-3xl font-bold tracking-tight text-ink-50">
             Not just search. Understanding.
           </h2>
-          <p className="mt-3 text-ink-400">
-            BookMind reasons about why you like what you like — and recommends accordingly.
+          <p className="mt-3 font-serif text-ink-400">
+            Story Scout listens for why you love what you love — and recommends accordingly.
           </p>
         </div>
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -191,7 +191,7 @@ export function LandingPage() {
             className="pointer-events-none absolute inset-0"
             style={{
               background:
-                "radial-gradient(40rem 20rem at 50% 0%, rgba(99,102,241,0.2), transparent)",
+                "radial-gradient(40rem 20rem at 50% 0%, rgba(229,169,60,0.18), transparent)",
             }}
           />
           <div className="relative">
@@ -217,7 +217,7 @@ export function LandingPage() {
       <footer className="border-t border-ink-800/60">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-5 py-8 text-sm text-ink-500 sm:flex-row">
           <Logo />
-          <p>© {new Date().getFullYear()} BookMind AI. Find your next favorite book.</p>
+          <p>© {new Date().getFullYear()} Story Scout. Find your next favorite book by the fire.</p>
           <a
             href="https://github.com"
             target="_blank"

@@ -15,53 +15,86 @@
 
   body {
     @apply bg-ink-950 text-ink-100 antialiased;
+    /* Warm hearth vignette layered over a faint candle-lit canvas. */
+    background-image:
+      radial-gradient(120% 120% at 50% -10%, rgba(229, 169, 60, 0.07) 0%, rgba(28, 18, 12, 0) 55%),
+      radial-gradient(100% 80% at 100% 100%, rgba(163, 147, 235, 0.05) 0%, rgba(28, 18, 12, 0) 60%);
+    background-attachment: fixed;
     font-feature-settings:
       "rlig" 1,
       "calt" 1;
   }
 
+  h1,
+  h2,
+  h3 {
+    @apply font-display;
+  }
+
   ::selection {
-    @apply bg-brand-500/30 text-white;
+    @apply bg-brand-400/30 text-ink-50;
   }
 }
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition
-      focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400 disabled:cursor-not-allowed disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-2 text-sm font-semibold transition-all duration-300 ease-in-out
+      focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/70 disabled:cursor-not-allowed disabled:opacity-50;
   }
 
+  /* Primary action: warm candle-gold with a soft ambient glow. */
   .btn-primary {
-    @apply btn bg-brand-600 text-white hover:bg-brand-500 active:bg-brand-700;
+    @apply btn bg-gradient-to-b from-brand-500 to-brand-700 text-ink-950 shadow-glow
+      hover:from-brand-400 hover:to-brand-600 hover:shadow-glow-md active:from-brand-600 active:to-brand-700;
   }
 
   .btn-secondary {
-    @apply btn border border-ink-700 bg-ink-900 text-ink-100 hover:border-ink-600 hover:bg-ink-800;
+    @apply btn border border-amber-900/40 bg-ink-900/70 text-ink-100 hover:border-brand-700/60 hover:bg-ink-800;
   }
 
   .btn-ghost {
-    @apply btn text-ink-300 hover:bg-ink-800 hover:text-white;
+    @apply btn text-ink-300 hover:bg-ink-800/70 hover:text-ink-50;
   }
 
+  /* Parchment input: soft leather edge that warms to gold on focus. */
   .input {
-    @apply w-full rounded-lg border border-ink-700 bg-ink-900 px-3.5 py-2.5 text-sm text-ink-100
-      placeholder:text-ink-500 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/30;
+    @apply w-full rounded-2xl border border-amber-900/40 bg-ink-900/70 px-4 py-2.5 text-sm text-ink-100 shadow-inner
+      transition-all duration-300 ease-in-out placeholder:text-ink-500
+      focus:border-brand-500/70 focus:outline-none focus:ring-2 focus:ring-brand-500/25;
   }
 
   .label {
     @apply mb-1.5 block text-sm font-medium text-ink-300;
   }
 
+  /* Vintage-leather card with faint gold filigree + ambient warmth. */
   .card {
-    @apply rounded-2xl border border-ink-800 bg-ink-900/60 shadow-xl shadow-black/20 backdrop-blur;
+    @apply rounded-3xl border border-amber-900/30 bg-ink-900/60 shadow-parchment backdrop-blur
+      transition-all duration-500 ease-in-out;
   }
 
+  /* Signpost / glowing rune — for suggestion chips & tags. */
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full border border-ink-700 bg-ink-800/80 px-2.5 py-1 text-xs font-medium text-ink-200;
+    @apply inline-flex items-center gap-1 rounded-full border border-amber-900/40 bg-ink-800/70 px-3 py-1 text-xs font-medium tracking-wide text-ink-200;
+  }
+
+  /* Carved wooden shelf edge for the archives. */
+  .shelf {
+    @apply border-b-[3px] border-amber-950/70 bg-wood-grain;
+  }
+
+  /* Hand-written ink on a scroll — the Archivist's Note. */
+  .archivist-note {
+    @apply relative rounded-2xl border border-brand-900/40 bg-gradient-to-br from-ink-900/80 to-ink-950/70 px-4 py-3 font-serif italic leading-relaxed text-ink-200 shadow-glow;
+  }
+
+  /* Small uppercase fantasy eyebrow label. */
+  .eyebrow {
+    @apply font-cinzel text-[0.7rem] uppercase tracking-[0.22em] text-brand-400/90;
   }
 }
 
-/* Custom scrollbar */
+/* Custom scrollbar — warm sepia rails. */
 * {
   scrollbar-width: thin;
   scrollbar-color: theme("colors.ink.700") transparent;
@@ -88,11 +121,14 @@
   @apply mb-2 ml-5 list-decimal space-y-1;
 }
 .markdown strong {
-  @apply font-semibold text-white;
+  @apply font-semibold text-ink-50;
 }
 .markdown a {
   @apply text-brand-300 underline underline-offset-2 hover:text-brand-200;
 }
 .markdown code {
-  @apply rounded bg-ink-800 px-1.5 py-0.5 text-[0.85em] text-brand-200;
+  @apply rounded bg-ink-800 px-1.5 py-0.5 font-serif text-[0.85em] text-brand-200;
+}
+.markdown blockquote {
+  @apply my-2 border-l-2 border-brand-700/60 pl-3 font-serif italic text-ink-300;
 }

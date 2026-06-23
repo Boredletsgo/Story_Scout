@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {
-  BookOpen,
   Compass,
-  LayoutDashboard,
-  LibraryBig,
+  Feather,
+  KeyRound,
+  Library,
   LogOut,
   Menu,
-  MessageSquareText,
-  User2,
+  ScrollText,
   X,
 } from "lucide-react";
 
@@ -17,11 +16,11 @@ import { cn, initials } from "@/lib/utils";
 import { useAuthStore } from "@/store/auth";
 
 const NAV = [
-  { to: "/app", label: "Dashboard", icon: LayoutDashboard, end: true },
-  { to: "/app/chat", label: "Recommendations", icon: MessageSquareText },
+  { to: "/app", label: "The Hearth", icon: ScrollText, end: true },
+  { to: "/app/chat", label: "Ask the Scout", icon: Feather },
   { to: "/app/explore", label: "Explore", icon: Compass },
-  { to: "/app/library", label: "My Library", icon: LibraryBig },
-  { to: "/app/profile", label: "Profile", icon: User2 },
+  { to: "/app/library", label: "My Library", icon: Library },
+  { to: "/app/profile", label: "Profile", icon: KeyRound },
 ];
 
 export function AppLayout() {
@@ -47,17 +46,20 @@ export function AppLayout() {
 
   return (
     <div className="flex h-full bg-ink-950">
-      {/* Sidebar */}
+      {/* Sidebar — a tall carved bookshelf */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r border-ink-800 bg-ink-900/80 backdrop-blur transition-transform lg:static lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r-2 border-amber-950/70 bg-gradient-to-b from-ink-900 to-ink-950 bg-wood-grain backdrop-blur transition-transform duration-500 ease-in-out lg:static lg:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        <div className="flex h-16 items-center justify-between px-5">
+        {/* faint candle-glow seam down the shelf's inner edge */}
+        <span className="pointer-events-none absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-brand-700/40 to-transparent" />
+
+        <div className="flex h-20 items-center justify-between border-b border-amber-950/60 px-5 shelf">
           <Logo />
           <button
-            className="rounded-lg p-1.5 text-ink-400 hover:bg-ink-800 lg:hidden"
+            className="rounded-xl p-1.5 text-ink-400 transition hover:bg-ink-800 hover:text-ink-100 lg:hidden"
             onClick={() => setOpen(false)}
             aria-label="Close menu"
           >
@@ -65,7 +67,7 @@ export function AppLayout() {
           </button>
         </div>
 
-        <nav className="flex-1 space-y-1 px-3 py-2">
+        <nav className="flex-1 space-y-1.5 px-3 py-5">
           {NAV.map((item) => (
             <NavLink
               key={item.to}
@@ -74,23 +76,38 @@ export function AppLayout() {
               onClick={() => setOpen(false)}
               className={({ isActive }) =>
                 cn(
-                  "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition",
+                  "group relative flex items-center gap-3 rounded-2xl px-3.5 py-3 text-sm font-medium transition-all duration-300 ease-in-out",
                   isActive
-                    ? "bg-brand-600/15 text-brand-200"
-                    : "text-ink-300 hover:bg-ink-800 hover:text-white",
+                    ? "bg-brand-600/15 text-brand-200 shadow-glow"
+                    : "text-ink-300 hover:bg-ink-800/70 hover:text-ink-50",
                 )
               }
             >
-              <item.icon className="h-5 w-5" />
-              {item.label}
+              {({ isActive }) => (
+                <>
+                  <span
+                    className={cn(
+                      "absolute left-0 top-1/2 h-7 w-1 -translate-y-1/2 rounded-full bg-brand-400 transition-all duration-300",
+                      isActive ? "opacity-100 shadow-glow" : "opacity-0",
+                    )}
+                  />
+                  <item.icon
+                    className={cn(
+                      "h-5 w-5 transition-transform duration-300 group-hover:scale-110",
+                      isActive && "drop-shadow-[0_0_6px_rgba(229,169,60,0.55)]",
+                    )}
+                  />
+                  <span className="font-serif tracking-wide">{item.label}</span>
+                </>
+              )}
             </NavLink>
           ))}
         </nav>
 
-        <div className="border-t border-ink-800 p-3">
-          <div className="flex items-center gap-3 rounded-lg px-2 py-2">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-brand-700 text-sm font-bold text-white">
-              {user ? initials(user.full_name || user.username) : <User2 className="h-4 w-4" />}
+        <div className="border-t border-amber-950/60 p-3 shelf">
+          <div className="flex items-center gap-3 rounded-2xl px-2 py-2">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brand-700/40 bg-gradient-to-br from-brand-500 to-brand-700 font-cinzel text-sm font-bold text-ink-950 shadow-glow">
+              {user ? initials(user.full_name || user.username) : <KeyRound className="h-4 w-4" />}
             </span>
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-semibold text-ink-100">
@@ -101,10 +118,10 @@ export function AppLayout() {
           </div>
           <button
             onClick={handleLogout}
-            className="mt-1 flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-ink-300 transition hover:bg-ink-800 hover:text-white"
+            className="mt-1 flex w-full items-center gap-3 rounded-2xl px-3.5 py-2.5 text-sm font-medium text-ink-300 transition-all duration-300 hover:bg-ink-800/70 hover:text-ink-50"
           >
             <LogOut className="h-5 w-5" />
-            Sign out
+            <span className="font-serif tracking-wide">Close the ledger</span>
           </button>
         </div>
       </aside>
@@ -112,7 +129,7 @@ export function AppLayout() {
       {/* Backdrop for mobile */}
       {open ? (
         <div
-          className="fixed inset-0 z-30 bg-black/50 lg:hidden"
+          className="fixed inset-0 z-30 bg-black/60 backdrop-blur-sm lg:hidden"
           onClick={() => setOpen(false)}
           aria-hidden="true"
         />
@@ -120,9 +137,9 @@ export function AppLayout() {
 
       {/* Main */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-16 items-center gap-3 border-b border-ink-800 bg-ink-950/80 px-4 backdrop-blur lg:hidden">
+        <header className="flex h-16 items-center gap-3 border-b border-amber-950/60 bg-ink-950/80 px-4 backdrop-blur lg:hidden">
           <button
-            className="rounded-lg p-1.5 text-ink-300 hover:bg-ink-800"
+            className="rounded-xl p-1.5 text-ink-300 transition hover:bg-ink-800 hover:text-ink-100"
             onClick={() => setOpen(true)}
             aria-label="Open menu"
           >
@@ -154,15 +171,17 @@ export function PageHeader({
     <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
       <div className="flex items-start gap-3">
         {Icon ? (
-          <span className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-xl bg-brand-600/15 text-brand-300">
+          <span className="mt-1 flex h-11 w-11 items-center justify-center rounded-2xl border border-brand-800/40 bg-brand-600/12 text-brand-300 shadow-glow">
             <Icon className="h-5 w-5" />
           </span>
-        ) : (
-          <BookOpen className="hidden" />
-        )}
+        ) : null}
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-white">{title}</h1>
-          {subtitle ? <p className="mt-1 text-sm text-ink-400">{subtitle}</p> : null}
+          <h1 className="font-display text-3xl font-semibold leading-tight tracking-wide text-ink-50">
+            {title}
+          </h1>
+          {subtitle ? (
+            <p className="mt-1 font-serif text-sm italic text-ink-400">{subtitle}</p>
+          ) : null}
         </div>
       </div>
       {actions}

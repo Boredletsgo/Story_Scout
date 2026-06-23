@@ -23,8 +23,8 @@ export function AuthShell({
         </Link>
         <div className="flex flex-1 items-center justify-center py-10">
           <div className="w-full max-w-sm">
-            <h1 className="text-2xl font-bold tracking-tight text-white">{title}</h1>
-            <p className="mt-1.5 text-sm text-ink-400">{subtitle}</p>
+            <h1 className="text-2xl font-bold tracking-tight text-ink-50">{title}</h1>
+            <p className="mt-1.5 font-serif text-sm italic text-ink-400">{subtitle}</p>
             <div className="mt-8">{children}</div>
             <div className="mt-6 text-center text-sm text-ink-400">{footer}</div>
           </div>
@@ -32,12 +32,12 @@ export function AuthShell({
       </div>
 
       {/* Brand side */}
-      <div className="relative hidden overflow-hidden bg-ink-900 lg:block">
+      <div className="relative hidden overflow-hidden bg-ink-900 bg-wood-grain lg:block">
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(50rem 40rem at 30% 20%, rgba(99,102,241,0.25), transparent), radial-gradient(40rem 30rem at 80% 80%, rgba(168,85,247,0.18), transparent)",
+              "radial-gradient(50rem 40rem at 30% 20%, rgba(229,169,60,0.22), transparent), radial-gradient(40rem 30rem at 80% 80%, rgba(163,147,235,0.16), transparent)",
           }}
         />
         <div className="relative flex h-full flex-col justify-center px-12">
@@ -50,16 +50,16 @@ export function AuthShell({
 
           <div className="mt-12 grid max-w-md grid-cols-3 gap-4">
             {[
-              "from-indigo-500 to-purple-600",
-              "from-rose-500 to-orange-500",
-              "from-emerald-500 to-teal-600",
-              "from-sky-500 to-blue-600",
-              "from-fuchsia-500 to-pink-600",
-              "from-amber-500 to-red-500",
+              "from-amber-600 to-orange-800",
+              "from-rose-700 to-amber-900",
+              "from-emerald-700 to-teal-900",
+              "from-violet-700 to-indigo-900",
+              "from-amber-500 to-rose-900",
+              "from-stone-600 to-amber-950",
             ].map((g, i) => (
               <div
                 key={i}
-                className={`aspect-[2/3] rounded-lg bg-gradient-to-br ${g} opacity-80 shadow-lg`}
+                className={`aspect-[2/3] rounded-xl bg-gradient-to-br ${g} opacity-80 shadow-glow`}
               />
             ))}
           </div>
