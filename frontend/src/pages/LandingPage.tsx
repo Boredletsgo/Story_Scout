@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import { Logo } from "@/components/Logo";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 const FEATURES = [
   {
@@ -49,6 +50,7 @@ export function LandingPage() {
         <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
           <Logo />
           <nav className="flex items-center gap-2">
+            <ThemeSwitcher className="mr-1 hidden sm:inline-flex" />
             <Link to="/login" className="btn-ghost">
               Sign in
             </Link>

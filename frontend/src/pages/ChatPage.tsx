@@ -20,6 +20,8 @@ import { PageHeader } from "@/components/AppLayout";
 import { RatingStars } from "@/components/RatingStars";
 import { Spinner, TeaLoader } from "@/components/Spinner";
 import { cn } from "@/lib/utils";
+import { THEME_META } from "@/lib/themes";
+import { useThemeStore } from "@/store/theme";
 
 interface ChatTurn {
   id: string;
@@ -129,13 +131,14 @@ export function ChatPage() {
   };
 
   const empty = turns.length === 0;
+  const copy = THEME_META[useThemeStore((s) => s.theme)].chat;
 
   return (
     <div className="flex h-full flex-col bg-hearth">
-      <div className="border-b border-amber-950/60 px-5 py-4 shelf">
+      <div className="border-b border-brand-950/60 px-5 py-4 shelf">
         <PageHeader
-          title="The Hearth"
-          subtitle="Pull up a chair by the fire and tell the Scout what you long to read."
+          title={copy.heading}
+          subtitle={copy.subtitle}
           icon={Feather}
         />
       </div>
@@ -165,7 +168,7 @@ export function ChatPage() {
       </div>
 
       {/* Composer — an open, glowing spellbook */}
-      <div className="border-t border-amber-950/60 bg-ink-950/80 px-5 py-5 backdrop-blur">
+      <div className="border-t border-brand-950/60 bg-ink-950/80 px-5 py-5 backdrop-blur">
         <form onSubmit={onSubmit} className="mx-auto max-w-3xl">
           <div className="group relative rounded-3xl border border-brand-900/40 bg-gradient-to-br from-ink-900/90 to-ink-950/80 p-1.5 shadow-glow transition-all duration-500 focus-within:border-brand-500/60 focus-within:shadow-glow-md">
             {/* spine seam down the middle of the open book */}
@@ -182,7 +185,7 @@ export function ChatPage() {
                   }
                 }}
                 rows={1}
-                placeholder="What kind of world do you want to escape into tonight?"
+                placeholder={copy.placeholder}
                 className="max-h-40 flex-1 resize-none bg-transparent py-3 font-serif text-sm text-ink-100 placeholder:italic placeholder:text-ink-500 focus:outline-none"
                 style={{ minHeight: "3rem" }}
                 disabled={sending}
@@ -208,15 +211,17 @@ export function ChatPage() {
 }
 
 function EmptyState({ onPick }: { onPick: (s: string) => void }) {
+  const meta = THEME_META[useThemeStore((s) => s.theme)];
+  const Emblem = meta.icon;
   return (
     <div className="flex flex-col items-center py-12 text-center animate-fade-in-slow">
       <span className="relative mb-6 inline-flex h-16 w-16 items-center justify-center rounded-3xl border border-brand-700/40 bg-gradient-to-br from-ink-800 to-ink-950 shadow-glow-md">
         <span className="absolute inset-0 rounded-3xl bg-brand-400/10 blur animate-glow" />
-        <Sparkles className="relative h-8 w-8 text-brand-400 animate-float" />
+        <Emblem className="relative h-8 w-8 text-brand-400 animate-float" />
       </span>
-      <p className="eyebrow mb-2">A quiet alcove in the library</p>
+      <p className="eyebrow mb-2">{meta.persona}</p>
       <h2 className="font-display text-2xl font-semibold text-ink-50">
-        What tale shall we conjure tonight?
+        {meta.chat.emptyTitle}
       </h2>
       <p className="mt-2 max-w-md font-serif text-sm italic text-ink-400">
         Whisper a mood, a memory, or a beloved book — or follow one of these worn signposts.
@@ -226,7 +231,7 @@ function EmptyState({ onPick }: { onPick: (s: string) => void }) {
           <button
             key={s}
             onClick={() => onPick(s)}
-            className="group relative rounded-2xl border border-amber-900/40 bg-ink-900/60 px-4 py-3.5 text-left font-serif text-sm italic text-ink-200 shadow-parchment transition-all duration-500 ease-in-out hover:-translate-y-0.5 hover:border-brand-500/60 hover:text-brand-100 hover:shadow-glow-md"
+            className="group relative rounded-2xl border border-brand-900/40 bg-ink-900/60 px-4 py-3.5 text-left font-serif text-sm italic text-ink-200 shadow-parchment transition-all duration-500 ease-in-out hover:-translate-y-0.5 hover:border-brand-500/60 hover:text-brand-100 hover:shadow-glow-md"
           >
             <span className="mr-2 text-brand-400/70 transition group-hover:text-brand-400">✦</span>
             “{s}”
@@ -254,7 +259,7 @@ function AssistantBubble({ turn }: { turn: ChatTurn }) {
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl border border-brand-700/40 bg-gradient-to-br from-ink-800 to-ink-950 shadow-glow">
           <Sparkles className="h-4 w-4 text-brand-400" />
         </span>
-        <div className="min-w-0 flex-1 rounded-3xl rounded-tl-lg border border-amber-900/30 bg-ink-900/60 px-4 py-3 shadow-parchment">
+        <div className="min-w-0 flex-1 rounded-3xl rounded-tl-lg border border-brand-900/30 bg-ink-900/60 px-4 py-3 shadow-parchment">
           {turn.content ? (
             <div className="markdown font-serif text-sm text-ink-100">
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{turn.content}</ReactMarkdown>
@@ -269,24 +274,26 @@ function AssistantBubble({ turn }: { turn: ChatTurn }) {
       </div>
 
       {turn.recommendations && turn.recommendations.length > 0 ? (
-        <div className="ml-12 grid gap-3 sm:grid-cols-2">
-          {turn.recommendations.map((rec) => (
-            <RecommendationCard key={rec.book.id} rec={rec} />
-          ))}
+        <div className="ml-12">
+          <p className="eyebrow mb-2.5">{THEME_META[useThemeStore((s) => s.theme)].chat.results}</p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {turn.recommendations.map((rec) => (
+              <RecommendationCard key={rec.book.id} rec={rec} />
+            ))}
+          </div>
         </div>
       ) : null}
     </div>
   );
 }
 
-/** Cozy loading state: a steaming cup while the Scout searches the stacks. */
+/** Cozy loading state: a steaming cup while the agent searches the stacks. */
 function ScoutSearching() {
+  const copy = THEME_META[useThemeStore((s) => s.theme)].chat;
   return (
     <div className="flex items-center gap-3 py-1">
       <TeaLoader className="h-10 w-10" />
-      <span className="font-serif text-sm italic text-ink-400">
-        The Scout is wandering the stacks…
-      </span>
+      <span className="font-serif text-sm italic text-ink-400">{copy.loading}</span>
     </div>
   );
 }
@@ -340,10 +347,10 @@ function RecommendationCard({ rec }: { rec: RecommendationItem }) {
         </div>
       </div>
 
-      {/* The Archivist's Note — hand-written ink on a scroll. */}
+      {/* The Archivist's / Oracle's Note — hand-written reasoning on a scroll. */}
       <blockquote className="archivist-note text-xs">
         <span className="eyebrow mb-1 flex items-center gap-1.5">
-          <Quote className="h-3 w-3" /> Archivist's Note
+          <Quote className="h-3 w-3" /> {THEME_META[useThemeStore((s) => s.theme)].chat.noteLabel}
         </span>
         <span className="line-clamp-4 text-ink-200">{rec.reasoning}</span>
       </blockquote>

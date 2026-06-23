@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { Logo } from "@/components/Logo";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { cn, initials } from "@/lib/utils";
 import { useAuthStore } from "@/store/auth";
 
@@ -49,14 +50,14 @@ export function AppLayout() {
       {/* Sidebar — a tall carved bookshelf */}
       <aside
         className={cn(
-          "fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r-2 border-amber-950/70 bg-gradient-to-b from-ink-900 to-ink-950 bg-wood-grain backdrop-blur transition-transform duration-500 ease-in-out lg:static lg:translate-x-0",
+          "fixed inset-y-0 left-0 z-40 flex w-64 flex-col border-r-2 border-brand-950/70 bg-gradient-to-b from-ink-900 to-ink-950 bg-wood-grain backdrop-blur transition-transform duration-500 ease-in-out lg:static lg:translate-x-0",
           open ? "translate-x-0" : "-translate-x-full",
         )}
       >
         {/* faint candle-glow seam down the shelf's inner edge */}
         <span className="pointer-events-none absolute inset-y-0 right-0 w-px bg-gradient-to-b from-transparent via-brand-700/40 to-transparent" />
 
-        <div className="flex h-20 items-center justify-between border-b border-amber-950/60 px-5 shelf">
+        <div className="flex h-20 items-center justify-between border-b border-brand-950/60 px-5 shelf">
           <Logo />
           <button
             className="rounded-xl p-1.5 text-ink-400 transition hover:bg-ink-800 hover:text-ink-100 lg:hidden"
@@ -104,7 +105,12 @@ export function AppLayout() {
           ))}
         </nav>
 
-        <div className="border-t border-amber-950/60 p-3 shelf">
+        <div className="border-t border-brand-950/60 p-3 shelf">
+          {/* Choose your world */}
+          <div className="mb-3 px-1">
+            <p className="eyebrow mb-1.5 px-1">Choose your world</p>
+            <ThemeSwitcher labeled className="w-full" />
+          </div>
           <div className="flex items-center gap-3 rounded-2xl px-2 py-2">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-brand-700/40 bg-gradient-to-br from-brand-500 to-brand-700 font-cinzel text-sm font-bold text-ink-950 shadow-glow">
               {user ? initials(user.full_name || user.username) : <KeyRound className="h-4 w-4" />}
@@ -137,7 +143,7 @@ export function AppLayout() {
 
       {/* Main */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex h-16 items-center gap-3 border-b border-amber-950/60 bg-ink-950/80 px-4 backdrop-blur lg:hidden">
+        <header className="flex h-16 items-center gap-3 border-b border-brand-950/60 bg-ink-950/80 px-4 backdrop-blur lg:hidden">
           <button
             className="rounded-xl p-1.5 text-ink-300 transition hover:bg-ink-800 hover:text-ink-100"
             onClick={() => setOpen(true)}

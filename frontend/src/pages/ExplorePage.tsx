@@ -95,13 +95,13 @@ export function ExplorePage() {
         </div>
       ) : (
         // A magical bookcase: wood frame, warm inner glow, shelf plank at base.
-        <div className="rounded-3xl border border-amber-950/70 bg-wood-grain bg-ink-950/40 p-5 shadow-parchment">
+        <div className="rounded-3xl border border-brand-950/70 bg-wood-grain bg-ink-950/40 p-5 shadow-parchment">
           <div className="grid grid-cols-2 gap-4 gap-y-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
             {books.map((book) => (
               <BookCard key={book.id} book={book} />
             ))}
           </div>
-          <div className="mt-5 h-1 rounded-full border-b-4 border-amber-950/80 bg-gradient-to-r from-transparent via-amber-900/40 to-transparent" />
+          <div className="mt-5 h-1 rounded-full border-b-4 border-brand-950/80 bg-gradient-to-r from-transparent via-brand-900/40 to-transparent" />
         </div>
       )}
     </div>

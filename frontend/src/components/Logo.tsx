@@ -1,4 +1,6 @@
 import { cn } from "@/lib/utils";
+import { THEME_META } from "@/lib/themes";
+import { useThemeStore } from "@/store/theme";
 
 interface LogoProps {
   className?: string;
@@ -6,20 +8,26 @@ interface LogoProps {
 }
 
 export function Logo({ className, withWordmark = true }: LogoProps) {
+  const theme = useThemeStore((s) => s.theme);
+  const meta = THEME_META[theme];
+  const Emblem = meta.icon;
+  const [first, ...rest] = meta.name.split(" ");
+
   return (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
-      <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-brand-700/50 bg-gradient-to-br from-ink-800 to-ink-950 shadow-glow">
-        {/* Soft candle glow behind the emblem */}
+      <span className="relative inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-brand-700/50 bg-gradient-to-br from-ink-800 to-ink-950 shadow-glow transition-all duration-500">
+        {/* Soft glow behind the emblem */}
         <span className="absolute inset-0 rounded-2xl bg-brand-400/10 blur-sm animate-glow" />
-        <CompassBook className="relative h-6 w-6 text-brand-400" />
+        <Emblem className="relative h-6 w-6 text-brand-400 transition-colors duration-500" />
       </span>
       {withWordmark ? (
         <span className="flex flex-col leading-none">
-          <span className="font-cinzel text-base font-semibold tracking-wide text-ink-50">
-            Story<span className="text-brand-400"> Scout</span>
+          <span className="font-cinzel text-base font-semibold tracking-wide text-ink-50 transition-colors duration-500">
+            {first}
+            {rest.length ? <span className="text-brand-400"> {rest.join(" ")}</span> : null}
           </span>
           <span className="mt-0.5 font-serif text-[0.6rem] italic tracking-wide text-ink-400">
-            your cozy reading companion
+            {meta.tagline}
           </span>
         </span>
       ) : null}
@@ -27,31 +35,3 @@ export function Logo({ className, withWordmark = true }: LogoProps) {
   );
 }
 
-/** A compass rose cradling an open book — exploration meets stories. */
-function CompassBook({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
-      {/* compass ring */}
-      <circle
-        cx="12"
-        cy="12"
-        r="9.25"
-        stroke="currentColor"
-        strokeWidth="1.1"
-        opacity="0.55"
-      />
-      {/* open book pages */}
-      <path
-        d="M12 7.4c-1.3-.85-2.9-1.2-4.6-1.2-.5 0-.9.4-.9.9v6.7c0 .5.4.9.9.9 1.7 0 3.3.35 4.6 1.2 1.3-.85 2.9-1.2 4.6-1.2.5 0 .9-.4.9-.9V7.1c0-.5-.4-.9-.9-.9-1.7 0-3.3.35-4.6 1.2Z"
-        fill="currentColor"
-        opacity="0.9"
-      />
-      <path d="M12 7.4v8.6" stroke="#1C120C" strokeWidth="0.9" />
-      {/* north star needle */}
-      <path
-        d="M12 1.6l1.1 2.2L12 3.2l-1.1.6L12 1.6Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}

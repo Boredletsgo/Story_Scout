@@ -15,66 +15,67 @@ export default {
       },
       colors: {
         /**
-         * `ink` = warm, enveloping darks → parchment lights.
-         * Remapped from cold slate so every existing `ink-*` class becomes
-         * espresso / walnut / vintage-leather / cream automatically.
+         * All color tokens resolve to CSS variables (space-separated RGB
+         * channels) so the active theme can be swapped at runtime via the
+         * `data-theme` attribute on <html>. See src/index.css for the three
+         * palettes: lantern (default), lumina, phoenix.
+         *
+         * `ink`   = background → surface → border → muted → primary text.
+         * `brand` = the signature accent / "AI glow".
+         * `mist`  = secondary magic accent. `ember` = warm flourish.
          */
         ink: {
-          50: "#FBF7F1", // lightest parchment
-          100: "#F4EBE1", // parchment — primary text
-          200: "#E6D6C3",
-          300: "#D2B48C", // warm sepia — secondary text
-          400: "#B89A78", // muted sepia
-          500: "#8A7058", // faint sepia
-          600: "#5E4A38", // disabled / hairlines
-          700: "#3E2D1F", // soft borders
-          800: "#2D1F16", // vintage leather surface / borders
-          900: "#241710", // warm walnut surface
-          950: "#1C120C", // deep espresso background
+          50: "rgb(var(--ink-50) / <alpha-value>)",
+          100: "rgb(var(--ink-100) / <alpha-value>)",
+          200: "rgb(var(--ink-200) / <alpha-value>)",
+          300: "rgb(var(--ink-300) / <alpha-value>)",
+          400: "rgb(var(--ink-400) / <alpha-value>)",
+          500: "rgb(var(--ink-500) / <alpha-value>)",
+          600: "rgb(var(--ink-600) / <alpha-value>)",
+          700: "rgb(var(--ink-700) / <alpha-value>)",
+          800: "rgb(var(--ink-800) / <alpha-value>)",
+          900: "rgb(var(--ink-900) / <alpha-value>)",
+          950: "rgb(var(--ink-950) / <alpha-value>)",
         },
-        /**
-         * `brand` = the "AI glow": ethereal amber / candle gold.
-         * Remapped from indigo so accents, buttons and focus rings glow warm.
-         */
         brand: {
-          50: "#FBF3E2",
-          100: "#F8E7C4",
-          200: "#F4D89B",
-          300: "#EFC474", // light amber — hover text accents
-          400: "#E5A93C", // ✦ the signature AI glow
-          500: "#D9982E",
-          600: "#C5841F", // primary button
-          700: "#9E6818", // active
-          800: "#714912",
-          900: "#4E330E", // deep amber for filigree borders / shadows
-          950: "#2E1E08",
+          50: "rgb(var(--brand-50) / <alpha-value>)",
+          100: "rgb(var(--brand-100) / <alpha-value>)",
+          200: "rgb(var(--brand-200) / <alpha-value>)",
+          300: "rgb(var(--brand-300) / <alpha-value>)",
+          400: "rgb(var(--brand-400) / <alpha-value>)",
+          500: "rgb(var(--brand-500) / <alpha-value>)",
+          600: "rgb(var(--brand-600) / <alpha-value>)",
+          700: "rgb(var(--brand-700) / <alpha-value>)",
+          800: "rgb(var(--brand-800) / <alpha-value>)",
+          900: "rgb(var(--brand-900) / <alpha-value>)",
+          950: "rgb(var(--brand-950) / <alpha-value>)",
         },
-        // Misty lavender — secondary "magic" accent for AI flourishes.
+        // Secondary "magic" accent for AI flourishes.
         mist: {
-          300: "#C7BBF2",
-          400: "#A393EB",
-          500: "#8A78DE",
+          300: "rgb(var(--mist-300) / <alpha-value>)",
+          400: "rgb(var(--mist-400) / <alpha-value>)",
+          500: "rgb(var(--mist-500) / <alpha-value>)",
         },
-        // Hearth ember — warm secondary for flame/flicker touches.
+        // Warm secondary for flame / flicker touches.
         ember: {
-          400: "#E8853B",
-          500: "#D86B22",
+          400: "rgb(var(--ember-400) / <alpha-value>)",
+          500: "rgb(var(--ember-500) / <alpha-value>)",
         },
       },
       boxShadow: {
-        glow: "0 0 15px rgba(229,169,60,0.10)",
-        "glow-md": "0 0 28px rgba(229,169,60,0.16)",
-        "glow-lg": "0 0 48px rgba(229,169,60,0.20)",
-        "glow-mist": "0 0 28px rgba(163,147,235,0.18)",
+        glow: "0 0 15px rgb(var(--glow) / 0.10)",
+        "glow-md": "0 0 28px rgb(var(--glow) / 0.16)",
+        "glow-lg": "0 0 48px rgb(var(--glow) / 0.20)",
+        "glow-mist": "0 0 28px rgb(var(--mist-400) / 0.18)",
         parchment:
-          "0 1px 0 rgba(244,235,225,0.04) inset, 0 18px 40px -24px rgba(0,0,0,0.7)",
+          "0 1px 0 rgb(var(--ink-50) / 0.04) inset, 0 18px 40px -24px rgba(0,0,0,0.55)",
       },
       backgroundImage: {
-        // Faint warm vignette for page canvases.
+        // Faint themed vignette for page canvases.
         hearth:
-          "radial-gradient(120% 120% at 50% 0%, rgba(229,169,60,0.06) 0%, rgba(28,18,12,0) 55%)",
+          "radial-gradient(120% 120% at 50% 0%, rgb(var(--glow) / 0.06) 0%, transparent 55%)",
         "wood-grain":
-          "repeating-linear-gradient(90deg, rgba(0,0,0,0.10) 0px, rgba(0,0,0,0.10) 1px, transparent 1px, transparent 5px)",
+          "repeating-linear-gradient(90deg, rgb(var(--grain) / 0.10) 0px, rgb(var(--grain) / 0.10) 1px, transparent 1px, transparent 5px)",
       },
       keyframes: {
         "fade-in": {

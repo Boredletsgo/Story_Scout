@@ -2,9 +2,120 @@
 @tailwind components;
 @tailwind utilities;
 
+/**
+ * ─────────────────────────────────────────────────────────────────────────
+ *  THEME PALETTES
+ *  Each color token is a space-separated RGB triple consumed by Tailwind via
+ *  `rgb(var(--token) / <alpha-value>)`. Switch themes by setting
+ *  `document.documentElement.dataset.theme` to one of: lantern | lumina | phoenix.
+ *
+ *  Semantic ramp (works for both dark + light themes):
+ *    ink-950 = page bg · 900 = surface · 800 = raised/border · 700/600 = lines
+ *    500/400 = muted text · 300 = secondary · 200/100 = primary · 50 = headings
+ * ─────────────────────────────────────────────────────────────────────────
+ */
 @layer base {
-  :root {
+  /* ── Lantern Reads — cozy wizarding tavern (default) ───────────────────── */
+  :root,
+  [data-theme="lantern"] {
     color-scheme: dark;
+    --ink-50: 251 247 241;
+    --ink-100: 244 235 225;
+    --ink-200: 230 214 195;
+    --ink-300: 210 180 140;
+    --ink-400: 184 154 120;
+    --ink-500: 138 112 88;
+    --ink-600: 94 74 56;
+    --ink-700: 62 45 31;
+    --ink-800: 45 31 22;
+    --ink-900: 36 23 16;
+    --ink-950: 28 18 12;
+    --brand-50: 251 243 226;
+    --brand-100: 248 231 196;
+    --brand-200: 244 216 155;
+    --brand-300: 239 196 116;
+    --brand-400: 229 169 60;
+    --brand-500: 217 152 46;
+    --brand-600: 197 132 31;
+    --brand-700: 158 104 24;
+    --brand-800: 113 73 18;
+    --brand-900: 78 51 14;
+    --brand-950: 46 30 8;
+    --mist-300: 199 187 242;
+    --mist-400: 163 147 235;
+    --mist-500: 138 120 222;
+    --ember-400: 232 133 59;
+    --ember-500: 216 107 34;
+    --glow: 229 169 60;
+    --grain: 0 0 0;
+  }
+
+  /* ── Lumina Books — luminescent navy archive, gold emblem ──────────────── */
+  [data-theme="lumina"] {
+    color-scheme: dark;
+    --ink-50: 244 247 255;
+    --ink-100: 232 237 251;
+    --ink-200: 210 218 240;
+    --ink-300: 179 190 220;
+    --ink-400: 142 156 194;
+    --ink-500: 107 123 166;
+    --ink-600: 60 77 122;
+    --ink-700: 42 55 96;
+    --ink-800: 28 37 64;
+    --ink-900: 19 26 48;
+    --ink-950: 11 16 32;
+    --brand-50: 251 244 222;
+    --brand-100: 246 231 184;
+    --brand-200: 239 213 136;
+    --brand-300: 231 194 92;
+    --brand-400: 220 174 58;
+    --brand-500: 201 154 44;
+    --brand-600: 174 128 31;
+    --brand-700: 138 100 23;
+    --brand-800: 101 72 17;
+    --brand-900: 67 48 11;
+    --brand-950: 39 28 6;
+    --mist-300: 154 216 240;
+    --mist-400: 111 199 236;
+    --mist-500: 69 178 224;
+    --ember-400: 232 165 59;
+    --ember-500: 214 132 31;
+    --glow: 231 194 92;
+    --grain: 255 255 255;
+  }
+
+  /* ── Phoenix Pages — airy lavender oracle, origami light theme ─────────── */
+  [data-theme="phoenix"] {
+    color-scheme: light;
+    --ink-50: 36 30 61;
+    --ink-100: 50 42 82;
+    --ink-200: 67 56 107;
+    --ink-300: 94 79 144;
+    --ink-400: 126 111 176;
+    --ink-500: 154 141 196;
+    --ink-600: 195 184 230;
+    --ink-700: 218 210 240;
+    --ink-800: 237 232 251;
+    --ink-900: 250 248 255;
+    --ink-950: 236 233 247;
+    --brand-50: 243 239 251;
+    --brand-100: 231 222 248;
+    --brand-200: 210 194 240;
+    --brand-300: 183 160 230;
+    --brand-400: 155 126 219;
+    --brand-500: 132 95 203;
+    --brand-600: 110 73 180;
+    --brand-700: 87 58 142;
+    --brand-800: 66 44 107;
+    --brand-900: 46 31 75;
+    --brand-950: 28 19 48;
+    --mist-300: 248 201 168;
+    --mist-400: 243 169 119;
+    --mist-500: 232 139 79;
+    --ember-400: 243 169 119;
+    --ember-500: 232 139 79;
+    --glow: 155 126 219;
+    --grain: 124 92 214;
   }
 
   html,
@@ -15,11 +126,14 @@
 
   body {
     @apply bg-ink-950 text-ink-100 antialiased;
-    /* Warm hearth vignette layered over a faint candle-lit canvas. */
+    /* Themed vignette layered over a faint secondary haze. */
     background-image:
-      radial-gradient(120% 120% at 50% -10%, rgba(229, 169, 60, 0.07) 0%, rgba(28, 18, 12, 0) 55%),
-      radial-gradient(100% 80% at 100% 100%, rgba(163, 147, 235, 0.05) 0%, rgba(28, 18, 12, 0) 60%);
+      radial-gradient(120% 120% at 50% -10%, rgb(var(--glow) / 0.08) 0%, transparent 55%),
+      radial-gradient(100% 80% at 100% 100%, rgb(var(--mist-400) / 0.06) 0%, transparent 60%);
     background-attachment: fixed;
+    transition:
+      background-color 0.5s ease,
+      color 0.5s ease;
     font-feature-settings:
       "rlig" 1,
       "calt" 1;
@@ -42,23 +156,23 @@
       focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/70 disabled:cursor-not-allowed disabled:opacity-50;
   }
 
-  /* Primary action: warm candle-gold with a soft ambient glow. */
+  /* Primary action: the theme's signature accent with a soft ambient glow. */
   .btn-primary {
     @apply btn bg-gradient-to-b from-brand-500 to-brand-700 text-ink-950 shadow-glow
       hover:from-brand-400 hover:to-brand-600 hover:shadow-glow-md active:from-brand-600 active:to-brand-700;
   }
 
   .btn-secondary {
-    @apply btn border border-amber-900/40 bg-ink-900/70 text-ink-100 hover:border-brand-700/60 hover:bg-ink-800;
+    @apply btn border border-brand-900/40 bg-ink-900/70 text-ink-100 hover:border-brand-700/60 hover:bg-ink-800;
   }
 
   .btn-ghost {
     @apply btn text-ink-300 hover:bg-ink-800/70 hover:text-ink-50;
   }
 
-  /* Parchment input: soft leather edge that warms to gold on focus. */
+  /* Soft input: themed edge that warms to the accent on focus. */
   .input {
-    @apply w-full rounded-2xl border border-amber-900/40 bg-ink-900/70 px-4 py-2.5 text-sm text-ink-100 shadow-inner
+    @apply w-full rounded-2xl border border-brand-900/40 bg-ink-900/70 px-4 py-2.5 text-sm text-ink-100 shadow-inner
       transition-all duration-300 ease-in-out placeholder:text-ink-500
       focus:border-brand-500/70 focus:outline-none focus:ring-2 focus:ring-brand-500/25;
   }
@@ -67,23 +181,23 @@
     @apply mb-1.5 block text-sm font-medium text-ink-300;
   }
 
-  /* Vintage-leather card with faint gold filigree + ambient warmth. */
+  /* Card with faint filigree + ambient warmth. */
   .card {
-    @apply rounded-3xl border border-amber-900/30 bg-ink-900/60 shadow-parchment backdrop-blur
+    @apply rounded-3xl border border-brand-900/30 bg-ink-900/60 shadow-parchment backdrop-blur
       transition-all duration-500 ease-in-out;
   }
 
   /* Signpost / glowing rune — for suggestion chips & tags. */
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full border border-amber-900/40 bg-ink-800/70 px-3 py-1 text-xs font-medium tracking-wide text-ink-200;
+    @apply inline-flex items-center gap-1 rounded-full border border-brand-900/40 bg-ink-800/70 px-3 py-1 text-xs font-medium tracking-wide text-ink-200;
   }
 
-  /* Carved wooden shelf edge for the archives. */
+  /* Carved shelf edge for the archives. */
   .shelf {
-    @apply border-b-[3px] border-amber-950/70 bg-wood-grain;
+    @apply border-b-[3px] border-brand-950/70 bg-wood-grain;
   }
 
-  /* Hand-written ink on a scroll — the Archivist's Note. */
+  /* Hand-written note on a scroll — the Archivist's / Oracle's Note. */
   .archivist-note {
     @apply relative rounded-2xl border border-brand-900/40 bg-gradient-to-br from-ink-900/80 to-ink-950/70 px-4 py-3 font-serif italic leading-relaxed text-ink-200 shadow-glow;
   }
