@@ -1,5 +1,5 @@
 # ===========================================================================
-# BookMind AI - Frontend image
+# Story Scout - Frontend image
 # Build the Vite app, then serve the static bundle with nginx.
 # ===========================================================================
 

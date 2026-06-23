@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ===========================================================================
-# BookMind AI - backend container entrypoint
+# Story Scout - backend container entrypoint
 # Waits for Postgres, applies migrations, optionally seeds, then runs the app.
 # ===========================================================================
 set -euo pipefail

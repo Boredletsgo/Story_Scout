@@ -1,4 +1,4 @@
-"""Ingest additional books from the OpenLibrary public API into BookMind.
+"""Ingest additional books from the OpenLibrary public API into StoryScout.
 
 Usage::
 

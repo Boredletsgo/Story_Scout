@@ -137,7 +137,7 @@ async def auth_client(client: AsyncClient) -> AsyncClient:
     await client.post(
         "/api/v1/auth/register",
         json={
-            "email": "tester@bookmind.ai",
+            "email": "tester@storyscout.ai",
             "username": "tester",
             "full_name": "Test User",
             "password": "supersecret1",
@@ -145,7 +145,7 @@ async def auth_client(client: AsyncClient) -> AsyncClient:
     )
     resp = await client.post(
         "/api/v1/auth/login",
-        json={"email": "tester@bookmind.ai", "password": "supersecret1"},
+        json={"email": "tester@storyscout.ai", "password": "supersecret1"},
     )
     token = resp.json()["access_token"]
     client.headers["Authorization"] = f"Bearer {token}"

@@ -28,7 +28,7 @@ class Settings(BaseSettings):
     # ---- General ----
     ENVIRONMENT: Literal["development", "staging", "production", "test"] = "development"
     LOG_LEVEL: str = "INFO"
-    PROJECT_NAME: str = "BookMind AI"
+    PROJECT_NAME: str = "Story Scout"
     API_V1_PREFIX: str = "/api/v1"
 
     # ---- Security ----
@@ -44,9 +44,9 @@ class Settings(BaseSettings):
     )
 
     # ---- Database ----
-    POSTGRES_USER: str = "bookmind"
-    POSTGRES_PASSWORD: str = "bookmind"
-    POSTGRES_DB: str = "bookmind"
+    POSTGRES_USER: str = "storyscout"
+    POSTGRES_PASSWORD: str = "storyscout"
+    POSTGRES_DB: str = "storyscout"
     POSTGRES_HOST: str = "localhost"
     POSTGRES_PORT: int = 5432
     DATABASE_URL: str | None = None
@@ -54,7 +54,7 @@ class Settings(BaseSettings):
     # ---- ChromaDB ----
     CHROMA_HOST: str = "localhost"
     CHROMA_PORT: int = 8000
-    CHROMA_COLLECTION: str = "bookmind_books"
+    CHROMA_COLLECTION: str = "storyscout_books"
 
     # ---- Embeddings ----
     EMBEDDING_MODEL: str = "sentence-transformers/all-MiniLM-L6-v2"
@@ -72,7 +72,7 @@ class Settings(BaseSettings):
 
     # ---- MLflow ----
     MLFLOW_TRACKING_URI: str = "http://localhost:5000"
-    MLFLOW_EXPERIMENT_NAME: str = "bookmind-recommendations"
+    MLFLOW_EXPERIMENT_NAME: str = "storyscout-recommendations"
     ENABLE_MLFLOW: bool = True
 
     # ------------------------------------------------------------------ #

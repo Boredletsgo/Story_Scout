@@ -22,7 +22,7 @@ export function ThemeSwitcher({
       role="radiogroup"
       aria-label="Choose a theme"
       className={cn(
-        "inline-flex items-center gap-1 rounded-2xl border border-brand-900/40 bg-ink-900/70 p-1 backdrop-blur",
+        "flex items-center gap-1 rounded-2xl border border-brand-900/40 bg-ink-900/70 p-1 backdrop-blur",
         className,
       )}
     >
@@ -39,11 +39,13 @@ export function ThemeSwitcher({
             title={`${meta.name} — ${meta.persona}`}
             onClick={() => setTheme(id)}
             className={cn(
-              "group flex items-center gap-2 rounded-xl px-2.5 py-2 text-sm font-medium transition-all duration-300 ease-in-out",
+              "group flex items-center justify-center rounded-xl font-medium transition-all duration-300 ease-in-out",
               active
                 ? "bg-gradient-to-b from-brand-500 to-brand-700 text-ink-950 shadow-glow"
                 : "text-ink-400 hover:bg-ink-800/70 hover:text-ink-100",
-              labeled ? "flex-1 justify-center" : "",
+              labeled
+                ? "min-w-0 flex-1 flex-col gap-1 px-1 py-2"
+                : "gap-2 px-2.5 py-2 text-sm",
             )}
           >
             <Icon
@@ -53,7 +55,7 @@ export function ThemeSwitcher({
               )}
             />
             {labeled ? (
-              <span className="truncate font-serif text-xs tracking-wide">
+              <span className="max-w-full truncate font-serif text-[0.65rem] leading-none tracking-wide">
                 {meta.name.split(" ")[0]}
               </span>
             ) : null}

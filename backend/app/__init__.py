@@ -1,3 +1,3 @@
-"""BookMind AI backend application package."""
+"""Story Scout backend application package."""
 
 __version__ = "0.1.0"

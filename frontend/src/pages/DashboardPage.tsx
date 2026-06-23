@@ -39,7 +39,7 @@ export function DashboardPage() {
     <div className="mx-auto max-w-6xl px-5 py-8">
       <PageHeader
         title={`Welcome back, ${user?.full_name?.split(" ")[0] || user?.username || "reader"}`}
-        subtitle="Here's your reading life at a glance."
+        subtitle="Your reading life, gathered by the hearth."
         icon={LayoutDashboard}
         actions={
           <Link to="/app/chat" className="btn-primary">
@@ -56,7 +56,7 @@ export function DashboardPage() {
             <Sparkles className="h-5 w-5" />
           </span>
           <div>
-            <p className="text-sm font-semibold text-brand-200">Your reading coach</p>
+            <p className="text-sm font-semibold text-brand-200">Counsel from the Scout</p>
             <p className="mt-1 text-sm leading-relaxed text-ink-200">{coachQuery.data}</p>
           </div>
         </div>
@@ -99,7 +99,7 @@ export function DashboardPage() {
       {/* Recent library */}
       <div className="mt-8">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-white">Recently in your library</h2>
+          <h2 className="text-lg font-semibold text-white">Lately upon your shelves</h2>
           <Link
             to="/app/library"
             className="inline-flex items-center gap-1 text-sm text-brand-300 hover:text-brand-200"
@@ -113,9 +113,9 @@ export function DashboardPage() {
           <div className="card flex flex-col items-center justify-center gap-3 px-6 py-12 text-center">
             <BookOpen className="h-10 w-10 text-ink-600" />
             <div>
-              <p className="font-medium text-ink-200">Your library is empty</p>
+              <p className="font-medium text-ink-200">Your shelves stand empty</p>
               <p className="mt-1 text-sm text-ink-500">
-                Start a conversation to discover books you'll love.
+                Sit by the Hearth and let the Scout conjure stories to fill them.
               </p>
             </div>
             <Link to="/app/chat" className="btn-primary mt-1">
@@ -208,7 +208,7 @@ function AccuracyCard({ stats }: { stats?: DashboardStats }) {
         </>
       ) : (
         <p className="text-sm text-ink-500">
-          Rate recommendations with 👍 / 👎 and we'll track how well BookMind learns your taste.
+          Rate recommendations with 👍 / 👎 and we'll track how well Story Scout learns your taste.
         </p>
       )}
     </div>

@@ -21,8 +21,8 @@ const FEATURES = [
   },
   {
     icon: BrainCircuit,
-    title: "Thoughtful reasoning",
-    body: "A quiet circle of specialized agents reads your taste, gathers candidates, weighs them, and explains every choice.",
+    title: "Thoughtful Lore",
+    body: "A quiet council of unseen librarians studies your taste, gathers forgotten volumes from the deep stacks, and ponders why each story belongs in your hands.",
   },
   {
     icon: Wand2,
@@ -38,7 +38,7 @@ const FEATURES = [
 
 const STEPS = [
   { n: "01", title: "Tell the Scout your mood", body: "“Something cozy with a slow-burn romance and a found family.”" },
-  { n: "02", title: "The Scout wanders the stacks", body: "Taste-reading, retrieval, critique, and a hand-written reason — in moments." },
+  { n: "02", title: "The Scout wanders the stacks", body: "Wandering the secret halls, gathering volumes, and ink-scribing a personal letter of recommendation just for you—in moments." },
   { n: "03", title: "Curl up with picks you'll love", body: "Curated recommendations with reasons, ready to slip onto your shelf." },
 ];
 
@@ -97,7 +97,8 @@ export function LandingPage() {
               </Link>
             </div>
             <p className="mt-4 text-xs text-ink-500">
-              Runs fully offline with open-source models — or bring your own OpenAI / Anthropic key.
+              Runs entirely offline, powered by a quiet hearth-magic — or bring your own OpenAI or
+              Anthropic mystic keys to unlock deeper wisdom.
             </p>
           </div>
 

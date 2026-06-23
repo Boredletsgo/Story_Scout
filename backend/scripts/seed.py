@@ -27,8 +27,8 @@ configure_logging()
 logger = get_logger("seed")
 
 _SEED_FILE = Path(__file__).resolve().parents[1] / "app" / "data" / "seed_books.json"
-_DEMO_EMAIL = "demo@bookmind.ai"
-_DEMO_PASSWORD = "bookmind123"
+_DEMO_EMAIL = "demo@storyscout.ai"
+_DEMO_PASSWORD = "storyscout123"
 
 
 async def _create_tables() -> None:

@@ -36,8 +36,8 @@ export function AppLayout() {
       logout();
       navigate("/login", { replace: true });
     };
-    window.addEventListener("bookmind:logout", handler);
-    return () => window.removeEventListener("bookmind:logout", handler);
+    window.addEventListener("storyscout:logout", handler);
+    return () => window.removeEventListener("storyscout:logout", handler);
   }, [logout, navigate]);
 
   const handleLogout = () => {

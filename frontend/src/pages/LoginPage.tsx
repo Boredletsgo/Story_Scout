@@ -13,8 +13,8 @@ export function LoginPage() {
   const location = useLocation();
   const from = (location.state as { from?: string } | null)?.from ?? "/app";
 
-  const [email, setEmail] = useState("demo@bookmind.ai");
-  const [password, setPassword] = useState("bookmind123");
+  const [email, setEmail] = useState("demo@storyscout.ai");
+  const [password, setPassword] = useState("storyscout123");
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);

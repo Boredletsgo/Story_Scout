@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📚 BookMind AI
+# 📚 Story Scout
 
 ### Find your next favorite book through conversation.
 
@@ -249,7 +249,7 @@ docker compose exec ollama ollama pull llama3.1:8b
 > Until a model is pulled, recommendations still work end-to-end — the backend gracefully
 > falls back to a deterministic reply if the LLM is unavailable.
 
-**Demo account** (pre-seeded): `demo@bookmind.ai` / `bookmind123` (pre-filled on the login page).
+**Demo account** (pre-seeded): `demo@storyscout.ai` / `storyscout123` (pre-filled on the login page).
 
 ---
 
@@ -309,7 +309,7 @@ All backend configuration is environment-driven (see [`.env.example`](.env.examp
 | `ANTHROPIC_API_KEY`     | —                                             | Required when `LLM_PROVIDER=anthropic`       |
 | `EMBEDDING_MODEL`       | `sentence-transformers/all-MiniLM-L6-v2`      | Local embedding model (no key needed)        |
 | `SECRET_KEY`            | `change-me`                                   | **Set a strong random value in production**  |
-| `POSTGRES_*`            | `bookmind`                                    | Database credentials                         |
+| `POSTGRES_*`            | `storyscout`                                    | Database credentials                         |
 | `CHROMA_HOST` / `_PORT` | `localhost` / `8000`                          | Vector store location                        |
 | `ENABLE_MLFLOW`         | `true`                                        | Toggle experiment tracking                   |
 | `SEED_ON_START`         | `true`                                        | Seed demo data on container boot             |
@@ -424,5 +424,5 @@ Released under the [MIT License](#-license). Built as a demonstration of a produ
 agentic recommendation system.
 
 <div align="center">
-<sub>📚 BookMind AI — Find your next favorite book through conversation.</sub>
+<sub>📚 Story Scout — Find your next favorite book through conversation.</sub>
 </div>

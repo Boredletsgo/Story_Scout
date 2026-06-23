@@ -1,5 +1,5 @@
 # ===========================================================================
-# BookMind AI - Backend dependencies (pinned for reproducible prod builds)
+# Story Scout - Backend dependencies (pinned for reproducible prod builds)
 # ===========================================================================
 
 # --- Web framework ---

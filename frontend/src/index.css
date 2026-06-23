@@ -151,6 +151,22 @@
 }
 
 @layer components {
+  /*
+   * The logo lockup has a light-toned wordmark baked into the artwork, designed
+   * for the dark themes. On the light Phoenix theme it would wash out, so we rest
+   * the lockup on a soft dark "brand plate" that keeps every original color intact.
+   */
+  [data-theme="phoenix"] .brand-logo {
+    box-sizing: border-box;
+    padding: 0.3rem 0.6rem;
+    border-radius: 1rem;
+    background:
+      radial-gradient(120% 140% at 50% 0%, rgb(var(--brand-900) / 0.95) 0%, rgb(var(--brand-950) / 0.98) 100%);
+    box-shadow:
+      0 10px 26px -14px rgb(var(--brand-950) / 0.7),
+      inset 0 0 0 1px rgb(var(--brand-400) / 0.25);
+  }
+
   .btn {
     @apply inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-2 text-sm font-semibold transition-all duration-300 ease-in-out
       focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-400/70 disabled:cursor-not-allowed disabled:opacity-50;

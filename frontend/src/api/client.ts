@@ -8,8 +8,8 @@ import type { ApiErrorBody, Token } from "./types";
 
 const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL ?? "/api").replace(/\/$/, "");
 
-const ACCESS_KEY = "bookmind.access";
-const REFRESH_KEY = "bookmind.refresh";
+const ACCESS_KEY = "storyscout.access";
+const REFRESH_KEY = "storyscout.refresh";
 
 export const tokenStore = {
   get access(): string | null {
@@ -82,7 +82,7 @@ http.interceptors.response.use(
         return http(original);
       }
       // Refresh failed — bubble up so the app can redirect to login.
-      window.dispatchEvent(new CustomEvent("bookmind:logout"));
+      window.dispatchEvent(new CustomEvent("storyscout:logout"));
     }
     return Promise.reject(error);
   },

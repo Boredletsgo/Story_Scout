@@ -1,9 +1,9 @@
 {
-  "name": "bookmind-frontend",
+  "name": "storyscout-frontend",
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "BookMind AI — Find your next favorite book through conversation.",
+  "description": "Story Scout — Find your next favorite book through conversation.",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

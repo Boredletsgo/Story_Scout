@@ -1,4 +1,4 @@
-"""BookMind AI - FastAPI application entrypoint."""
+"""Story Scout - FastAPI application entrypoint."""
 
 from __future__ import annotations
 

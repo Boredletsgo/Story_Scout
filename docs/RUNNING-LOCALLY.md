@@ -1,4 +1,4 @@
-# Running BookMind AI Locally (Native, No Docker)
+# Running Story Scout Locally (Native, No Docker)
 
 ## Why native?
 
@@ -49,7 +49,7 @@ OpenAI/Anthropic) turns drop to a few seconds.
 
 ```dotenv
 SECRET_KEY=<your-secret>
-DATABASE_URL=sqlite+aiosqlite:///<abs-path>/backend/data/bookmind.db
+DATABASE_URL=sqlite+aiosqlite:///<abs-path>/backend/data/storyscout.db
 BACKEND_CORS_ORIGINS=["http://localhost:3000","http://localhost:5173"]
 ENABLE_MLFLOW=false
 CHROMA_HOST=localhost
@@ -80,8 +80,8 @@ npm run dev                                          # http://localhost:5173
 
 Then open **http://localhost:5173** and log in with the seeded demo account:
 
-- **Email:** `demo@bookmind.ai`
-- **Password:** `bookmind123`
+- **Email:** `demo@storyscout.ai`
+- **Password:** `storyscout123`
 
 > The first chat message after a server start is slow (cold model load);
 > subsequent messages are faster.

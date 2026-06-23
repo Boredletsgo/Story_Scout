@@ -47,7 +47,7 @@ export function ProfilePage() {
 
   return (
     <div className="mx-auto max-w-3xl px-5 py-8">
-      <PageHeader title="Profile & preferences" subtitle="Tune how BookMind understands you." icon={User2} />
+      <PageHeader title="Profile & preferences" subtitle="Tune how Story Scout understands you." icon={User2} />
 
       <div className="space-y-6">
         {userQuery.data ? (
@@ -213,7 +213,7 @@ function PreferencesForm({ pref, onSaved }: { pref: Preference; onSaved: () => v
       <div>
         <h3 className="font-semibold text-white">Taste profile</h3>
         <p className="mt-1 text-sm text-ink-400">
-          These guide your recommendations. BookMind also learns from your chats and ratings.
+          These guide your recommendations. Story Scout also learns from your chats and ratings.
         </p>
       </div>
 

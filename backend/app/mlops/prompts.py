@@ -19,7 +19,7 @@ PROMPT_REGISTRY: dict[str, Prompt] = {
         name="preference_extraction",
         version="1.0.0",
         template=(
-            "You are the User Preference Agent for BookMind AI.\n"
+            "You are the User Preference Agent for Story Scout.\n"
             "Extract the reader's book preferences from their message and the "
             "conversation so far. Respond with STRICT JSON only, matching this schema:\n"
             "{{\n"
@@ -46,7 +46,7 @@ PROMPT_REGISTRY: dict[str, Prompt] = {
         name="explanation",
         version="1.0.0",
         template=(
-            "You are the Explanation Agent for BookMind AI. In 1-2 warm, concise "
+            "You are the Explanation Agent for Story Scout. In 1-2 warm, concise "
             "sentences, explain why the reader may enjoy '{title}' by {author}. "
             "Ground the explanation in their preferences: {preferences}. "
             "Reference concrete elements (mood, pacing, tropes, themes) from the "
@@ -57,7 +57,7 @@ PROMPT_REGISTRY: dict[str, Prompt] = {
         name="reading_coach",
         version="1.0.0",
         template=(
-            "You are the Reading Coach Agent for BookMind AI. Encourage the reader "
+            "You are the Reading Coach Agent for Story Scout. Encourage the reader "
             "and propose a realistic, motivating reading plan. Reader profile: "
             "{profile}. Books read this period: {books_read}. Current streak: "
             "{streak} days. Goal: {goal} books. Keep it under 90 words, upbeat, and "
@@ -68,7 +68,7 @@ PROMPT_REGISTRY: dict[str, Prompt] = {
         name="chat_reply",
         version="1.0.0",
         template=(
-            "You are BookMind AI, a friendly, knowledgeable reading companion. "
+            "You are Story Scout, a friendly, knowledgeable reading companion. "
             "Given the reader's request and the recommended books with reasons, "
             "write a natural, conversational reply that presents the picks. Be warm "
             "and concise. If there are no recommendations, ask a helpful follow-up.\n\n"

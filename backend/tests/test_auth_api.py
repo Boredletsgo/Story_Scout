@@ -18,18 +18,18 @@ async def test_register_and_login(client: AsyncClient) -> None:
     reg = await client.post(
         "/api/v1/auth/register",
         json={
-            "email": "newuser@bookmind.ai",
+            "email": "newuser@storyscout.ai",
             "username": "newuser",
             "full_name": "New User",
             "password": "password123",
         },
     )
     assert reg.status_code == 201
-    assert reg.json()["email"] == "newuser@bookmind.ai"
+    assert reg.json()["email"] == "newuser@storyscout.ai"
 
     login = await client.post(
         "/api/v1/auth/login",
-        json={"email": "newuser@bookmind.ai", "password": "password123"},
+        json={"email": "newuser@storyscout.ai", "password": "password123"},
     )
     assert login.status_code == 200
     body = login.json()
@@ -40,7 +40,7 @@ async def test_register_and_login(client: AsyncClient) -> None:
 @pytest.mark.asyncio
 async def test_duplicate_email_rejected(client: AsyncClient) -> None:
     payload = {
-        "email": "dup@bookmind.ai",
+        "email": "dup@storyscout.ai",
         "username": "dup",
         "password": "password123",
     }

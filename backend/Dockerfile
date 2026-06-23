@@ -1,5 +1,5 @@
 # ===========================================================================
-# BookMind AI - Backend image
+# Story Scout - Backend image
 # Multi-stage build: install deps into a venv, then copy into a slim runtime.
 # ===========================================================================
 

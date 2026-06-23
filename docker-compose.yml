@@ -1,5 +1,5 @@
 # ===========================================================================
-# BookMind AI - full stack orchestration
+# Story Scout - full stack orchestration
 #
 # One command to run everything:   docker compose up --build
 #
@@ -12,26 +12,26 @@
 #   frontend   - React SPA served by nginx, proxies /api -> backend
 # ===========================================================================
 
-name: bookmind
+name: storyscout
 
 services:
   postgres:
     image: postgres:16-alpine
     restart: unless-stopped
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-bookmind}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bookmind}
-      POSTGRES_DB: ${POSTGRES_DB:-bookmind}
+      POSTGRES_USER: ${POSTGRES_USER:-storyscout}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-storyscout}
+      POSTGRES_DB: ${POSTGRES_DB:-storyscout}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-bookmind} -d ${POSTGRES_DB:-bookmind}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-storyscout} -d ${POSTGRES_DB:-storyscout}"]
       interval: 10s
       timeout: 5s
       retries: 5
-    networks: [bookmind]
+    networks: [storyscout]
 
   chromadb:
     image: chromadb/chroma:0.5.23
@@ -48,7 +48,7 @@ services:
       interval: 15s
       timeout: 5s
       retries: 5
-    networks: [bookmind]
+    networks: [storyscout]
 
   ollama:
     image: ollama/ollama:latest
@@ -59,7 +59,7 @@ services:
       - ollama_data:/root/.ollama
     ports:
       - "${OLLAMA_HOST_PORT:-11434}:11434"
-    networks: [bookmind]
+    networks: [storyscout]
     # GPU acceleration is optional. Uncomment if you have the NVIDIA toolkit:
     # deploy:
     #   resources:
@@ -82,7 +82,7 @@ services:
       - mlflow_data:/mlflow
     ports:
       - "${MLFLOW_HOST_PORT:-5000}:5000"
-    networks: [bookmind]
+    networks: [storyscout]
 
   backend:
     build:
@@ -98,9 +98,9 @@ services:
       ENVIRONMENT: ${ENVIRONMENT:-production}
       SECRET_KEY: ${SECRET_KEY:-please-change-this-in-production}
       # Database
-      POSTGRES_USER: ${POSTGRES_USER:-bookmind}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-bookmind}
-      POSTGRES_DB: ${POSTGRES_DB:-bookmind}
+      POSTGRES_USER: ${POSTGRES_USER:-storyscout}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-storyscout}
+      POSTGRES_DB: ${POSTGRES_DB:-storyscout}
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
       # Vector store
@@ -128,7 +128,7 @@ services:
     volumes:
       # Persist downloaded embedding model weights between restarts.
       - hf_cache:/home/app/.cache/huggingface
-    networks: [bookmind]
+    networks: [storyscout]
 
   frontend:
     build:
@@ -139,7 +139,7 @@ services:
       - backend
     ports:
       - "${FRONTEND_HOST_PORT:-3000}:80"
-    networks: [bookmind]
+    networks: [storyscout]
 
 volumes:
   postgres_data:
@@ -149,5 +149,5 @@ volumes:
   hf_cache:
 
 networks:
-  bookmind:
+  storyscout:
     driver: bridge

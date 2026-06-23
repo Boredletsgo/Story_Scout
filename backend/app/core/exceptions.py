@@ -10,7 +10,7 @@ from app.core.logging import get_logger
 logger = get_logger(__name__)
 
 
-class BookMindError(Exception):
+class StoryScoutError(Exception):
     """Base application error."""
 
     status_code: int = status.HTTP_500_INTERNAL_SERVER_ERROR
@@ -22,32 +22,32 @@ class BookMindError(Exception):
         super().__init__(self.detail)
 
 
-class NotFoundError(BookMindError):
+class NotFoundError(StoryScoutError):
     status_code = status.HTTP_404_NOT_FOUND
     detail = "Resource not found."
 
 
-class ConflictError(BookMindError):
+class ConflictError(StoryScoutError):
     status_code = status.HTTP_409_CONFLICT
     detail = "Resource already exists."
 
 
-class AuthenticationError(BookMindError):
+class AuthenticationError(StoryScoutError):
     status_code = status.HTTP_401_UNAUTHORIZED
     detail = "Could not validate credentials."
 
 
-class PermissionError_(BookMindError):
+class PermissionError_(StoryScoutError):
     status_code = status.HTTP_403_FORBIDDEN
     detail = "Not enough permissions."
 
 
-class ValidationError(BookMindError):
+class ValidationError(StoryScoutError):
     status_code = status.HTTP_422_UNPROCESSABLE_ENTITY
     detail = "Validation failed."
 
 
-class LLMProviderError(BookMindError):
+class LLMProviderError(StoryScoutError):
     status_code = status.HTTP_502_BAD_GATEWAY
     detail = "LLM provider error."
 
@@ -55,8 +55,8 @@ class LLMProviderError(BookMindError):
 def register_exception_handlers(app: FastAPI) -> None:
     """Attach handlers that convert exceptions into JSON responses."""
 
-    @app.exception_handler(BookMindError)
-    async def _handle_bookmind_error(_: Request, exc: BookMindError) -> ORJSONResponse:
+    @app.exception_handler(StoryScoutError)
+    async def _handle_storyscout_error(_: Request, exc: StoryScoutError) -> ORJSONResponse:
         return ORJSONResponse(
             status_code=exc.status_code,
             content={"detail": exc.detail, "type": exc.__class__.__name__},
