@@ -108,6 +108,57 @@ recommend ──> critic ──> explanation ──> memory ──> END
 
 ---
 
+## LangChain & LangGraph — what they do for us
+
+**LangChain** is the glue between our code and the LLM. Its main value here is
+**provider abstraction** — the agents write to one interface, and we can swap
+Ollama ↔ OpenAI ↔ Anthropic by changing the `LLM_PROVIDER` config, with zero
+changes to agent logic. **LangGraph** (a sibling library) orchestrates the
+multi-step agent workflow as a graph.
+
+### Packages used (`requirements.txt`)
+| Package | Why |
+|---|---|
+| `langgraph` | Builds/runs the recommendation pipeline as a state graph |
+| `langchain-core` | Base types (chat model interface, message objects) |
+| `langchain` / `langchain-community` | Core framework utilities |
+| `langchain-openai` | OpenAI chat model adapter |
+| `langchain-anthropic` | Anthropic (Claude) adapter |
+| `langchain-ollama` | Local Ollama adapter (default) |
+
+### Provider model classes — `app/llm/provider.py`
+The factory builds whichever model matches `LLM_PROVIDER`:
+- `ChatOpenAI`, `ChatAnthropic`, `ChatOllama` — provider-specific chat models.
+- `BaseChatModel` — the common **return type** all three share. The rest of the
+  app only knows it has *a* `BaseChatModel`, not which provider. **This is the key
+  abstraction.**
+
+### Message objects + invocation — `app/agents/base.py`
+The single chokepoint every agent uses (`invoke_llm()`):
+- `SystemMessage` — the instruction ("You extract structured reading preferences…").
+- `HumanMessage` — the user's content.
+- `BaseMessage` — base type for the message list.
+- `model.ainvoke(messages)` — the async call that runs the LLM.
+- `response.content` — the text reply.
+- `response.usage_metadata` — token counts for MLflow cost tracking (falls back to
+  a char-based estimate when Ollama doesn't report them).
+
+### LangGraph orchestration — `app/agents/graph.py`
+- `StateGraph(AgentState)` — creates the graph, typed by the shared state.
+- `add_node(name, fn)` — registers each agent as a step.
+- `set_entry_point("preference")` — where the flow starts.
+- `add_conditional_edges(...)` — branching (clarify vs. recommend).
+- `add_edge(a, b)` — fixed transitions between steps.
+- `END` — the terminal marker.
+- `graph.compile()` — turns the definition into a runnable graph (cached).
+- `graph.ainvoke(initial_state)` — runs the whole pipeline asynchronously.
+
+**In one line:** LangChain gives a uniform chat-model interface (build a model,
+send `System`+`Human` messages, `ainvoke`, read `content`/`usage`) so providers
+are swappable, and LangGraph wires the agents into a runnable state-machine pipeline.
+
+---
+
 ## Worked example — tracing one real message
 
 **User types:** *"something cozy like Harry Potter but for adults"*
