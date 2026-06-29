@@ -53,6 +53,28 @@ For each book it stores three things:
 
 ---
 
+## Where everything is hosted (today)
+
+Right now nothing is in the cloud — all data and the LLM run **locally**.
+
+| Piece | Local dev | Docker stack |
+|---|---|---|
+| **Postgres / SQLite** | SQLite file: `backend/data/storyscout.db` | `postgres` container + `postgres_data` volume |
+| **Chroma** | Embedded, file-based: `backend/data/chroma/` (no server) | `chromadb` container + `chroma_data` volume |
+| **LLM** | Ollama running on your machine (`:11434`) | `ollama` container |
+
+How Chroma chooses (`app/rag/vector_store.py`): it tries to connect to a Chroma
+**server** first (`CHROMA_HOST`/`CHROMA_PORT`); if none exists (local dev) it falls
+back to a `PersistentClient` writing the `backend/data/chroma/` folder — like
+SQLite, just a file, zero hosting. The Chroma folder is gitignored and rebuildable
+from Postgres via the seed/ingest scripts.
+
+For deployment you'd choose: keep running the Chroma container yourself, switch to
+a managed vector service (Qdrant Cloud / Pinecone), or fold vectors into Postgres
+via **pgvector** (one less service).
+
+---
+
 ## What is an embedding? (the heart of Chroma)
 
 An **embedding** turns text into a list of numbers that represents its *meaning*.
